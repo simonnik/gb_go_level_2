@@ -58,15 +58,10 @@ func createFiles() {
 	ind := 50000
 
 	for i := 1; i <= n; i++ {
-		f := createFile(fmt.Sprintf("%s/file_%d.txt", dir, i))
-		func(f *os.File) {
-			defer func(f *os.File) {
-				err := f.Close()
-				if err != nil {
-					log.Fatalf("error: %v\n", err)
-				}
-			}(f)
-		}(f)
+		err := createFileAndClose(fmt.Sprintf("%s/file_%d.txt", dir, i))
+		if err != nil {
+			log.Fatalf("error: %v\n", err)
+		}
 
 		if i%ind == 0 {
 			fmt.Printf("Created %v\n", i)
@@ -84,15 +79,16 @@ func createFiles() {
 	}
 }
 
-func createFile(pathFile string) *os.File {
+func createFileAndClose(pathFile string) error {
 	f, err := os.Create(pathFile)
 
 	if err != nil {
-		fmt.Printf("error: %v\n", err)
-		panic(err)
+		return err
 	}
 
-	return f
+	defer f.Close()
+
+	return nil
 }
 
 func panicInGoroutine() {
