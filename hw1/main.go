@@ -19,7 +19,7 @@ type ErrorWithTimestamp struct {
 	timestamp string
 }
 
-func New(text string) error {
+func NewErrorWithTimestamp(text string) error {
 	return &ErrorWithTimestamp{
 		message:   text,
 		timestamp: time.Now().String(),
@@ -33,8 +33,7 @@ func (e *ErrorWithTimestamp) Error() string {
 func handlePanic() {
 	defer func() {
 		if v := recover(); v != nil {
-			err := New(fmt.Sprintf("Error from panic %v", v))
-			fmt.Printf("Handle panic:\n%v\n", err)
+			fmt.Printf("Handle panic:\n%v\n", NewErrorWithTimestamp(fmt.Sprintf("Error from panic %v", v)))
 		}
 	}()
 
