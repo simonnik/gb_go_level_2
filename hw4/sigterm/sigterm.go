@@ -17,9 +17,13 @@ func main() {
 	ctx, cancelFunc := context.WithTimeout(context.Background(), time.Second)
 	defer cancelFunc()
 
-	select {
-	case <-ctx.Done():
-		fmt.Println("Closed")
-		return
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println("Done")
+			return
+		default:
+			fmt.Println("Waiting for close signal")
+		}
 	}
 }
