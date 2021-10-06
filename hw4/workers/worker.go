@@ -5,8 +5,9 @@ import (
 	"time"
 )
 
+const limitWorkers = 1000
+
 func main() {
-	limitWorkers := 1000
 	total := 0
 	var jobs = make(chan int, limitWorkers)
 
