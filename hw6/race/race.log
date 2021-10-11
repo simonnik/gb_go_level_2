@@ -1,0 +1,20 @@
+==================
+WARNING: DATA RACE
+Read at 0x00c0000bc028 by goroutine 8:
+  main.main.func1()
+      /Users/simon/go/src/geekbrains/go/hw6/race/main.go:20 +0x8d
+
+Previous write at 0x00c0000bc028 by goroutine 7:
+  main.main.func1()
+      /Users/simon/go/src/geekbrains/go/hw6/race/main.go:20 +0xa4
+
+Goroutine 8 (running) created at:
+  main.main()
+      /Users/simon/go/src/geekbrains/go/hw6/race/main.go:18 +0x8f
+
+Goroutine 7 (finished) created at:
+  main.main()
+      /Users/simon/go/src/geekbrains/go/hw6/race/main.go:18 +0x8f
+==================
+Found 1 data race(s)
+exit status 66
