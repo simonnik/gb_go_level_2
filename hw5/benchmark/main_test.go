@@ -10,12 +10,12 @@ import (
 
 type Set struct {
 	sync.Mutex
-	mm map[int]struct{}
+	mm map[interface{}]interface{}
 }
 
 func NewSet() *Set {
 	return &Set{
-		mm: map[int]struct{}{},
+		mm: make(map[interface{}]interface{}),
 	}
 }
 
@@ -34,12 +34,12 @@ func (s *Set) Has(i int) bool {
 
 type RWSet struct {
 	sync.RWMutex
-	mm map[int]struct{}
+	mm map[interface{}]interface{}
 }
 
 func NewRWSet() *RWSet {
 	return &RWSet{
-		mm: map[int]struct{}{},
+		mm: make(map[interface{}]interface{}),
 	}
 }
 
