@@ -26,8 +26,8 @@ func main() {
 
 	go func() {
 		defer wg.Done()
+		wg.Add(3)
 		for i := 0; i < 3; i++ {
-			wg.Add(1)
 			fmt.Println(i)
 		}
 	}()
