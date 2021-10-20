@@ -62,6 +62,10 @@ func main() {
 		userAnswer := scanner.Text()
 		if strings.ToLower(userAnswer) == "y" {
 			for _, duplicateName := range duplicateList {
+				err := os.Remove(duplicateName)
+				if err != nil {
+					log.Fatalf("Error: %v", err)
+				}
 				fmt.Println("- deleted:", duplicateName)
 			}
 		}
