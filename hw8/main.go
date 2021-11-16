@@ -35,9 +35,6 @@ func main() {
 		d    = flag.Bool("d", false, "Delete duplicated files?")
 	)
 	flag.Parse()
-	fmt.Println(*path, *file, *d)
-	p, _ := os.Getwd()
-	fmt.Println(p)
 
 	duplicateList, err := FindDuplicate(*path, *file)
 	if err != nil {
