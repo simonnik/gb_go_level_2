@@ -4,9 +4,14 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"go.uber.org/zap"
 )
 
 func TestNewSearchTarget(t *testing.T) {
+	logger := zap.NewExample()
+	sugar := logger.Sugar()
+
 	tempFile, err := os.CreateTemp(".", "temp")
 	if err != nil {
 		t.Fatal("cant create temp file for test")
@@ -34,7 +39,7 @@ func TestNewSearchTarget(t *testing.T) {
 	)
 
 	for _, tc := range testTable {
-		targetStruct, err := NewSearchTarget(tc.fileName)
+		targetStruct, err := NewSearchTarget(tc.fileName, sugar)
 
 		if (err != nil && !tc.expectError) || (err == nil && tc.expectError) {
 			t.Fatalf(

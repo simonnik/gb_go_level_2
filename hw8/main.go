@@ -26,19 +26,37 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"go.uber.org/zap"
 )
 
 func main() {
+	logger, err := zap.NewDevelopment()
+
+	if err != nil {
+		log.Fatal("logging not initialize")
+	}
+	sugar := logger.Sugar()
+	//defer logger.Sync()
+
+	sugar.Info("Logger initialize")
 	var (
 		path = flag.String("path", ".", "dir for search")
 		file = flag.String("file", "", "file name for search")
 		d    = flag.Bool("d", false, "Delete duplicated files?")
 	)
-	flag.Parse()
 
-	duplicateList, err := FindDuplicate(*path, *file)
+	flag.Parse()
+	sugar.With(
+		zap.String("path", *path),
+		zap.String("file", *file),
+		zap.Bool("d", *d),
+	).Info("Flag parsed")
+
+	sugar.Info("Search for duplicates started")
+	duplicateList, err := FindDuplicate(*path, *file, sugar)
 	if err != nil {
-		log.Fatalf("Error: %v", err)
+		sugar.Fatalf("Error: %v", err)
 	}
 	duplicateCount := len(duplicateList)
 
